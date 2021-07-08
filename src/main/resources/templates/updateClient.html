@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Update Client</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Update Client</h1>
+
+<form th:action="@{/updateClient}"
+      th:object="${clientDTO}" method="POST">
+    Select ClientId:
+    <select th:field="*{clientId}">
+        <option th:each="client:${clients}"
+                th:value="${client.clientId}"
+                th:text="${client.clientId}">
+        </option>
+    </select>
+    <br/>
+    FullName:
+    <td><input type="text" th:field="*{fullName}"/></td>
+    <div th:errors="*{fullName}" class="error"/>
+    <br/>
+    Phone:
+    <input type="text" th:field="*{phone}"/>
+    <br/>
+    Email:
+    <input type="text" th:field="*{email}"/>
+    <br/>
+    PassportNumber:
+    <input type="text" th:field="*{passportNumber}"/>
+    <br/>
+    <input type="submit" value="Update"/>
+</form>
+
+</body>
+</html>
