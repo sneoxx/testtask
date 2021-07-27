@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Credit List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu.html"></th:block>
+<h1>Credit List</h1>
+<div>
+    <table border="1">
+        <tr>
+            <th>CreditId</th>
+            <th>CreditLimit</th>
+            <th>InterestRate</th>
+
+        </tr>
+        <tr th:each="credit : ${credits}">
+            <td th:utext="${credit.creditId}">...</td>
+            <td th:utext="${credit.creditLimit}">...</td>
+            <td th:utext="${credit.interestRate}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

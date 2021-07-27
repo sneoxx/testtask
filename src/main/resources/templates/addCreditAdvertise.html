@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Select Credit</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu.html"></th:block>
+<h1>Select Credit</h1>
+<h2>Credit List</h2>
+<div>
+    <table border="1">
+        <tr>
+            <th>CreditId</th>
+            <th>CreditLimit</th>
+            <th>InterestRate</th>
+        </tr>
+        <tr th:each="credit : ${credits}">
+            <td th:utext="${credit.creditId}">...</td>
+            <td th:utext="${credit.creditLimit}">...</td>
+            <td th:utext="${credit.interestRate}">...</td>
+        </tr>
+    </table>
+</div>
+<form name='f' th:object="${creditAdvertiseDTO}" method='POST'>
+    <table>
+        <tr>
+            <td>Select CreditId:</td>
+            <td>
+                <select th:field="*{creditId}">
+                    <option th:each="credit:${credits}"
+                            th:value="${credit.creditId}"
+                            th:text="${credit.creditId}">
+                    </option>
+                </select>
+
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>Select Client:</td>
+            <td>
+                <select th:field="*{clientId}">
+                    <option th:each="client:${clients}"
+                            th:value="${client.clientId}"
+                            th:text="${client.fullName}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    Enter credit amount:
+    <input type="text" th:field="*{creditAmount}"/>
+    <div th:errors="*{creditAmount}" class="error" color="red"></div>
+    <br/>
+    Enter loan term months:
+    <input type="text" th:field="*{loanTermMonths}"/>
+    <div th:errors="*{loanTermMonths}" class="error"></div>
+    <br/>
+    <tr>
+        <td><input name="submit" type="submit" value="Select"/></td>
+    </tr>
+</form>
+<br/>
+</body>
+</html>

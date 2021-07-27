@@ -1,5 +1,0 @@
-spring:
-  datasource:
-    url: jdbc:postgresql://localhost:5432/testdb?currentSchema=zaraev
-    username: usr
-    password: pass

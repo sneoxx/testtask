@@ -1,6 +1,7 @@
 package com.haulmont.testtask.resource;
 
-import com.haulmont.testtask.dto.ClientDTO;
+import com.haulmont.testtask.api.dto.ClientDTO;
+import com.haulmont.testtask.api.resource.ClientResource;
 import com.haulmont.testtask.entity.Client;
 import com.haulmont.testtask.service.ClientService;
 import lombok.RequiredArgsConstructor;
@@ -9,27 +10,29 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс для обработки веб запросов к Client
+ */
 @RequiredArgsConstructor
 @Controller
 @Slf4j
-public class ClientResourceImpl {
+public class ClientResourceImpl implements ClientResource {
 
     private final ClientService clientService;
 
     private final ConversionService conversionService;
 
     /**
+     * Получить всех client
+     *
      * @param model - объект Model для хранения данных
      * @return - заполненную страницу clientList
      */
-    @RequestMapping(value = {"/clientList"}, method = RequestMethod.GET)
+    @Override
     public String getAll(Model model) {
         List<Client> clientList = clientService.getAllClient();
         List<ClientDTO> clientDTOList = new ArrayList<>();
@@ -37,27 +40,32 @@ public class ClientResourceImpl {
             clientDTOList.add(conversionService.convert(client, ClientDTO.class));
         }
         model.addAttribute("clients", clientDTOList);
-        log.info("getAll()- Получены все client");
+        log.info("getAll() - Получены все client");
         return "clientList";
     }
 
     /**
+     * Добавление нового Client
+     *
      * @param model - объект Model для хранения данных
      * @return - страницу addClient
      */
-    @RequestMapping(value = {"/addClient"}, method = RequestMethod.GET)
+    @Override
     public String create(Model model) {
         model.addAttribute("clientDTO", new ClientDTO());
+        log.debug("create() - Форма добавления client");
         return "addClient";
     }
 
     /**
+     * Добавление нового Client
+     *
      * @param clientDTO     - clientDTO для заполения формы
      * @param bindingResult - объект для валидации входных параметров
      * @return - вернет страницу addClient в случае неверных параметров и редирект на страницу clientList в случае успеха
      */
-    @RequestMapping(value = {"/addClient"}, method = RequestMethod.POST)
-    public String create(@Valid ClientDTO clientDTO, BindingResult bindingResult) {
+    @Override
+    public String create(ClientDTO clientDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "addClient";
         }
@@ -65,14 +73,16 @@ public class ClientResourceImpl {
         Client clientResult = clientService.create(clientConvert);
         ClientDTO clientDTOCheck = conversionService.convert(clientResult, ClientDTO.class);
         log.info("create() - Создан новый Client {}", clientDTOCheck);
-        return "redirect:clientList";
+        return "redirect:allClient";
     }
 
     /**
+     * Обновление Client
+     *
      * @param model - объект Model для хранения данных
      * @return - страницу updateClient
      */
-    @RequestMapping(value = {"/updateClient"}, method = RequestMethod.GET)
+    @Override
     public String update(Model model) {
         model.addAttribute("clientDTO", new ClientDTO());
         List<Client> clientList = clientService.getAllClient();
@@ -81,17 +91,20 @@ public class ClientResourceImpl {
             clientDTOList.add(conversionService.convert(client, ClientDTO.class));
         }
         model.addAttribute("clients", clientDTOList);
+        log.debug("update() - Форма обновления client");
         return "updateClient";
     }
 
     /**
+     * Обновление Client
+     *
      * @param clientDTO     - clientDTO для заполения формы
      * @param bindingResult - объект для валидации входных параметров
      * @param model         - объект Model для хранения данных
      * @return - - вернет страницу updateClient в случае неверных параметров и редирект на страницу clientList в случае успеха
      */
-    @RequestMapping(value = {"/updateClient"}, method = RequestMethod.POST)
-    public String update(@Valid ClientDTO clientDTO, BindingResult bindingResult, Model model) {
+    @Override
+    public String update(ClientDTO clientDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             List<Client> clientList = clientService.getAllClient();
             List<ClientDTO> clientDTOList = new ArrayList<>();
@@ -105,14 +118,16 @@ public class ClientResourceImpl {
         Client clientResult = clientService.create(clientConvert);
         ClientDTO clientDTOCheck = conversionService.convert(clientResult, ClientDTO.class);
         log.info("update() - Обновлен Client: {}", clientDTOCheck);
-        return "redirect:clientList";
+        return "redirect:allClient";
     }
 
     /**
+     * Удаление Client
+     *
      * @param model - объект Model для хранения данных
      * @return страница deleteClient для первоначального отображения
      */
-    @RequestMapping(value = {"/deleteClient"}, method = RequestMethod.GET)
+    @Override
     public String delete(Model model) {
         model.addAttribute("clientDTO", new ClientDTO());
         List<Client> clientList = clientService.getAllClient();
@@ -121,20 +136,22 @@ public class ClientResourceImpl {
             clientDTOList.add(conversionService.convert(client, ClientDTO.class));
         }
         model.addAttribute("clients", clientDTOList);
+        log.debug("delete() - Форма удаления client");
         return "deleteClient";
     }
 
     /**
-     * Удаление клиента по id
+     * Удаление Client
      *
      * @param clientDTO - clientDTO для заполения формы
      * @return - редирект на страницу со всеми client
      */
-    @RequestMapping(value = {"/deleteClient"}, method = RequestMethod.POST)
+    @Override
     public String delete(ClientDTO clientDTO) {
         Client clientResult = clientService.deleteById(clientDTO.getClientId());
-        ClientDTO clientDTO1 = conversionService.convert(clientResult, ClientDTO.class);
-        log.info("delete() - Удален client: {}", clientDTO1);
-        return "redirect:clientList";
+        ClientDTO clientDTOCheck = conversionService.convert(clientResult, ClientDTO.class);
+        log.info("delete() - Удален client: {}", clientDTOCheck);
+        return "redirect:allClient";
     }
+
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Delete Credit</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu.html"></th:block>
+<h1>Delete Credit</h1>
+
+Select CreditId:
+<form th:action="@{/credit/deleteCredit}" th:object="${creditDTO}" method="POST">
+    <select th:field="*{creditId}">
+        <option th:each="credit:${credits}"
+                th:value="${credit.creditId}"
+                th:text="${credit.creditId}">
+        </option>
+    </select>
+    <br/>
+    <input type="submit" value="Delete"/>
+</form>
+
+<br/>
+</body>
+</html>

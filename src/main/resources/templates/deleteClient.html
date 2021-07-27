@@ -1,21 +1,22 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Delete Client</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
+<th:block th:include="/_menu.html"></th:block>
 <h1>Delete Client</h1>
 
 Select ClientId:
-<form th:action="@{/deleteClient}" th:object="${clientDTO}" method="POST">
-        <select th:field="*{clientId}">
-            <option th:each="client:${clients}"
-                    th:value="${client.clientId}"
-                    th:text="${client.clientId}">
-            </option>
-        </select>
+<form th:action="@{/client/deleteClient}" th:object="${clientDTO}" method="POST">
+    <select th:field="*{clientId}">
+        <option th:each="client:${clients}"
+                th:value="${client.clientId}"
+                th:text="${client.clientId}">
+        </option>
+    </select>
     <br/>
     <input type="submit" value="Delete"/>
 </form>

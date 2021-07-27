@@ -1,14 +1,10 @@
 package com.haulmont.testtask;
 
-
-
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Класс регистрирующий Spring Dispatcher Servlet
- *
  */
 
 @SpringBootApplication
@@ -18,4 +14,5 @@ public class Application {
         SpringApplication.run(Application.class);
 
     }
+
 }

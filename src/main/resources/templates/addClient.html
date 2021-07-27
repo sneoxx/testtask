@@ -6,26 +6,28 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
+<th:block th:include="/_menu.html"></th:block>
 <h1>Add Client</h1>
-
-<form th:action="@{/addClient}"
+<form th:action="@{/client/addClient}"
       th:object="${clientDTO}" method="POST">
     FullName:
     <input type="text" th:field="*{fullName}"/>
-    <div th:errors="*{fullName}" class="error"/>
+    <div th:errors="*{fullName}" class="error"></div>
     <br/>
     Phone:
     <input type="text" th:field="*{phone}"/>
+    <div th:errors="*{phone}" class="error"></div>
     <br/>
     Email:
     <input type="text" th:field="*{email}"/>
+    <div th:errors="*{email}" class="error"></div>
     <br/>
     PassportNumber:
     <input type="text" th:field="*{passportNumber}"/>
+    <div th:errors="*{passportNumber}" class="error"></div>
     <br/>
     <input type="submit" value="Create"/>
 </form>
-
 <br/>
 </body>
 </html>

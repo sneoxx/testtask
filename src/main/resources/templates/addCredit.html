@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Credit</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu.html"></th:block>
+<h1>Add Credit</h1>
+<form th:action="@{/credit/addCredit}"
+      th:object="${creditDTO}" method="POST">
+    CreditLimit:
+    <input type="text" th:field="*{creditLimit}"/>
+    <div th:errors="*{creditLimit}" class="error"></div>
+    <br/>
+    InterestRate:
+    <input type="text" th:field="*{interestRate}"/>
+    <div th:errors="*{interestRate}" class="error"></div>
+    <br/>
+    <input type="submit" value="Create"/>
+</form>
+<br/>
+</body>
+</html>

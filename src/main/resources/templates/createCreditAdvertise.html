@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Credit Advertise</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu.html"></th:block>
+<h1>Credit Advertise</h1>
+<div>
+    <table border="1">
+        Credit terms:
+        <br/>
+        <tr>
+            <th>Client Id</th>
+            <th>Credit Id</th>
+            <th>Credit Amount</th>
+            <th>Interest Rate</th>
+            <th>Full Credit Amount</th>
+            <th>Interest Amount</th>
+            <th>LoanTermMonths</th>
+        </tr>
+        <tr th:object="${creditAdvertiseDTO}">
+            <td th:utext="${creditAdvertiseDTO.clientId}">...</td>
+            <td th:utext="${creditAdvertiseDTO.creditId}">...</td>
+            <td th:utext="${creditAdvertiseDTO.creditAmount}">...</td>
+            <td th:utext="${creditAdvertiseDTO.interestRate}">...</td>
+            <td th:utext="${creditAdvertiseDTO.fullCreditAmount}">...</td>
+            <td th:utext="${creditAdvertiseDTO.interestAmount}">...</td>
+            <td th:utext="${creditAdvertiseDTO.loanTermMonths}">...</td>
+        </tr>
+    </table>
+    Payment schedule:
+    <div>
+        <table border="1">
+            <tr>
+                <th>Payment Date</th>
+                <th>Amount Payment</th>
+                <th>Body Payment</th>
+                <th>Interest Payment</th>
+            </tr>
+            <tr th:each="creditGraphList : ${creditAdvertiseDTO.creditGraphs}">
+                <td th:utext="${creditGraphList.paymentDate}">...</td>
+                <td th:utext="${creditGraphList.amountPayment}">...</td>
+                <td th:utext="${creditGraphList.bodyPayment}">...</td>
+                <td th:utext="${creditGraphList.interestPayment}">...</td>
+            </tr>
+        </table>
+    </div>
+    <form th:action="@{/creditAdvertise/createCreditAdvertise}"
+          th:object="${creditAdvertiseDTO}" method="POST">
+        <tr>
+            <input type="hidden" th:field="*{clientId}"/>
+            <input type="hidden" th:field="*{creditId}"/>
+            <input type="hidden" th:field="*{creditAmount}"/>
+            <input type="hidden" th:field="*{interestRate}"/>
+            <input type="hidden" th:field="*{fullCreditAmount}"/>
+            <input type="hidden" th:field="*{interestAmount}"/>
+            <input type="hidden" th:field="*{creditGraphs}"/>
+            <input type="hidden" th:field="*{loanTermMonths}"/>
+            <br/>
+            Get credit?
+            <br/>
+            <td><input name="submit" type="submit" value="Yes"/></td>
+        </tr>
+    </form>
+</div>
+</body>
+</html>

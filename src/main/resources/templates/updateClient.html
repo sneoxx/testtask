@@ -6,9 +6,10 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
+<th:block th:include="/_menu.html"></th:block>
 <h1>Update Client</h1>
 
-<form th:action="@{/updateClient}"
+<form th:action="@{/client/updateClient}"
       th:object="${clientDTO}" method="POST">
     Select ClientId:
     <select th:field="*{clientId}">
@@ -24,12 +25,15 @@
     <br/>
     Phone:
     <input type="text" th:field="*{phone}"/>
+    <div th:errors="*{phone}" class="error"/>
     <br/>
     Email:
     <input type="text" th:field="*{email}"/>
+    <div th:errors="*{email}" class="error"/>
     <br/>
     PassportNumber:
     <input type="text" th:field="*{passportNumber}"/>
+    <div th:errors="*{passportNumber}" class="error"/>
     <br/>
     <input type="submit" value="Update"/>
 </form>

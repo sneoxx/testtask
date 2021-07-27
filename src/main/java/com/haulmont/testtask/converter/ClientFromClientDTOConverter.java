@@ -1,6 +1,6 @@
 package com.haulmont.testtask.converter;
 
-import com.haulmont.testtask.dto.ClientDTO;
+import com.haulmont.testtask.api.dto.ClientDTO;
 import com.haulmont.testtask.entity.Client;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -21,4 +21,5 @@ public class ClientFromClientDTOConverter implements Converter<ClientDTO, Client
         client.setEmail(clientDTO.getEmail());
         return client;
     }
+
 }

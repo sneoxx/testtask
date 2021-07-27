@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Update Credit</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu.html"></th:block>
+<h1>Update Credit</h1>
+
+<form th:action="@{/updateCredit}"
+      th:object="${creditDTO}" method="POST">
+    Select ClientId:
+    <select th:field="*{creditId}">
+        <option th:each="credit:${credits}"
+                th:value="${credit.creditId}"
+                th:text="${credit.creditId}">
+        </option>
+    </select>
+    <br/>
+    CreditLimit:
+    <td><input type="text" th:field="*{creditLimit}"/></td>
+    <div th:errors="*{creditLimit}" class="error"/>
+    <br/>
+    InterestRate:
+    <input type="text" th:field="*{interestRate}"/>
+    <br/>
+    <input type="submit" value="Update"/>
+</form>
+
+</body>
+</html>

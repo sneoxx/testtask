@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Credit Graph List</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<th:block th:include="/_menu.html"></th:block>
+<h1>Credit Graph List</h1>
+<div>
+    <form name='f' th:object="${creditGraphDTO}" method='POST'>
+        <table>
+            <tr>
+                <td>Select Credit Advertise:</td>
+                <td>
+                    <select th:field="*{creditAdvertise}">
+                        <option th:each="creditGraph:${creditGraphs}"
+                                th:value="${creditGraph}"
+                                th:text="${creditGraph}">
+                        </option>
+                    </select>
+            <tr>
+                <td><input name="submit" type="submit" value="Select"/></td>
+            </tr>
+        </table>
+    </form>
+    Payment schedule:
+    <table border="1">
+        <tr>
+            <th>Payment Date</th>
+            <th>Amount Payment</th>
+            <th>Body Payment</th>
+            <th>Interest Payment</th>
+        </tr>
+        <tr th:each="creditGraph : ${creditGraphss}">
+            <td th:utext="${creditGraph.paymentDate}">...</td>
+            <td th:utext="${creditGraph.amountPayment}">...</td>
+            <td th:utext="${creditGraph.bodyPayment}">...</td>
+            <td th:utext="${creditGraph.interestPayment}">...</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

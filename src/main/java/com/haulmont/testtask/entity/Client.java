@@ -2,11 +2,10 @@ package com.haulmont.testtask.entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -20,6 +19,7 @@ public class Client {
 
     @Id
     @GeneratedValue
+    @Column(name = "client_id")
     private UUID clientId;
 
     private String fullName;
@@ -29,5 +29,9 @@ public class Client {
     private String email;
 
     private String passportNumber;
+
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "clientList", fetch = FetchType.EAGER)
+    private List<CreditAdvertise> creditAdvertiseList;
 
 }

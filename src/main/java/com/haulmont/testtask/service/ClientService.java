@@ -11,36 +11,20 @@ import java.util.UUID;
 public interface ClientService {
 
     /**
-     * Создание и запись в БД рандомного Client
-     *
-     * @return - client записанный в базу
-     */
-    Client createRandomClient();
-
-    /**
      * Создание и запись в БД екземпляра Client
      *
      * @param client - Экземпляр Client
-     * @return - сustomer записанный в базу
+     * @return - client записанный в базу
      */
     Client create(Client client);
 
     /**
-     * Обновление случайными данными и запись в БД екземпляра Client
-     *
-     * @param client - экземпляр Client, на который необходимо изменить
-     * @return - client обновленный в базе
-     */
-    Client updateRandomData(Client client);
-
-    /**
      * Обновление и запись в БД экземпляра Client
      *
-     * @param id       - id экземпляра Client в базе, который необходимо изменить
      * @param Client - экземпляр Client, на который необходимо изменить
      * @return - client обновленный в базе
      */
-    Client update(UUID id, Client Client);
+    Client update(Client Client);
 
     /**
      * Получение Client из базы
