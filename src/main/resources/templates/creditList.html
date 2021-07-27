@@ -2,18 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Credit List</title>
+    <title>All Credit</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <th:block th:include="/_menu.html"></th:block>
-<h1>Credit List</h1>
+<h1>All Credit</h1>
 <div>
     <table border="1">
         <tr>
-            <th>CreditId</th>
-            <th>CreditLimit</th>
-            <th>InterestRate</th>
+            <th>Credit Id</th>
+            <th>Credit Limit</th>
+            <th>Interest Rate</th>
 
         </tr>
         <tr th:each="credit : ${credits}">

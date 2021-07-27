@@ -2,20 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Client List</title>
+    <title>All Client</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <th:block th:include="/_menu.html"></th:block>
-<h1>Client List</h1>
+<h1>All Client</h1>
 <div>
     <table border="1">
         <tr>
-            <th>ClientId</th>
-            <th>FullName</th>
+            <th>Client Id</th>
+            <th>Full Name</th>
             <th>Phone</th>
             <th>Email</th>
-            <th>PassportNumber</th>
+            <th>Passport Number</th>
         </tr>
         <tr th:each="client : ${clients}">
             <td th:utext="${client.clientId}">...</td>

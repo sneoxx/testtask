@@ -8,13 +8,13 @@
 <body>
 <th:block th:include="/_menu.html"></th:block>
 <h1>Select Credit</h1>
-<h2>Credit List</h2>
+<h2>All Credit</h2>
 <div>
     <table border="1">
         <tr>
-            <th>CreditId</th>
-            <th>CreditLimit</th>
-            <th>InterestRate</th>
+            <th>Credit Id</th>
+            <th>Credit Limit</th>
+            <th>Interest Rate</th>
         </tr>
         <tr th:each="credit : ${credits}">
             <td th:utext="${credit.creditId}">...</td>
@@ -26,7 +26,7 @@
 <form name='f' th:object="${creditAdvertiseDTO}" method='POST'>
     <table>
         <tr>
-            <td>Select CreditId:</td>
+            <td>Select Credit Id:</td>
             <td>
                 <select th:field="*{creditId}">
                     <option th:each="credit:${credits}"

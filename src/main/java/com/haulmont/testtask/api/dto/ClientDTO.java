@@ -18,7 +18,7 @@ public class ClientDTO {
 
     @NotBlank
     @Size(max = 50)
-    @Pattern(regexp = "[а-яА-Я]+", message = "Invalid Full Name")
+    @Pattern(regexp = "[а-яА-Я\\s]+", message = "Invalid Full Name")
     private String fullName;
 
     @Pattern(regexp = "[0-9+]+", message = "Invalid Phone")
