@@ -12,19 +12,19 @@
     <table border="1">
         <tr>
             <th>Credit Advertise Id</th>
-            <th>Credit Id</th>
+            <th>Credit Name</th>
             <th>Credit Amount</th>
             <th>Loan Term Months</th>
-            <th>Client Id</th>
-            <th>Credit Graphs Id</th>
+            <th>Client Name</th>
+<!--            <th>Credit Graphs Id</th>-->
         </tr>
         <tr th:each="creditAdvertise : ${creditAdvertises}">
             <td th:utext="${creditAdvertise.creditAdvertiseId}">...</td>
-            <td th:utext="${creditAdvertise.creditId}">...</td>
+            <td th:utext="${creditAdvertise.creditName}">...</td>
             <td th:utext="${creditAdvertise.creditAmount}">...</td>
             <td th:utext="${creditAdvertise.loanTermMonths}">...</td>
-            <td th:utext="${creditAdvertise.clientId}">...</td>
-            <td th:utext="${creditAdvertise.creditGraphsId}">...</td>
+            <td th:utext="${creditAdvertise.clientName}">...</td>
+<!--            <td th:utext="${creditAdvertise.creditGraphsId}">...</td>-->
         </tr>
     </table>
 </div>

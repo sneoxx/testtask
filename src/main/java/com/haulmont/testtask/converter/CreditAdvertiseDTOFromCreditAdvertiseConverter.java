@@ -4,6 +4,7 @@ import com.haulmont.testtask.api.dto.CreditAdvertiseDTO;
 import com.haulmont.testtask.entity.Client;
 import com.haulmont.testtask.entity.CreditAdvertise;
 import com.haulmont.testtask.entity.CreditGraph;
+import com.haulmont.testtask.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -26,9 +27,12 @@ public class CreditAdvertiseDTOFromCreditAdvertiseConverter implements Converter
         creditAdvertiseDTO.setCreditAmount(creditAdvertise.getCreditAmount().intValue());
         creditAdvertiseDTO.setLoanTermMonths(creditAdvertise.getLoanTermMonths());
         creditAdvertiseDTO.setCreditId(creditAdvertise.getCredit().getCreditId());
+        creditAdvertiseDTO.setCreditName(creditAdvertise.getCredit().getCreditName());
+
         for (Client foundClient : creditAdvertise.getClientList()) {
             UUID foundClientId = foundClient.getClientId();
             creditAdvertiseDTO.setClientId(foundClientId);
+            creditAdvertiseDTO.setClientName(foundClient.getFullName());
         }
         List<CreditGraph> creditGraphList = new ArrayList<>();
         for (CreditGraph creditGraphs : creditAdvertise.getCreditGraphs()) {

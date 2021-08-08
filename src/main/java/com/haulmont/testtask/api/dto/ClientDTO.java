@@ -18,14 +18,14 @@ public class ClientDTO {
 
     @NotBlank
     @Size(max = 50)
-    @Pattern(regexp = "[а-яА-Я\\s]+", message = "Invalid Full Name")
+    @Pattern(regexp = "[а-яА-Яa-zA-Z\\s]+", message = "Invalid Full Name")
     private String fullName;
 
     @Pattern(regexp = "[0-9+]+", message = "Invalid Phone")
     @Size(min = 6, max = 12)
     private String phone;
 
-    @Email
+    @Email(regexp = ".+@.+\\..+")
     @Size(min = 5, max = 50)
     private String email;
 

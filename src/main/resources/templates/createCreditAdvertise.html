@@ -13,8 +13,8 @@
         Credit terms:
         <br/>
         <tr>
-            <th>Client Id</th>
-            <th>Credit Id</th>
+            <th>Client Name</th>
+            <th>Credit Name</th>
             <th>Credit Amount</th>
             <th>Interest Rate</th>
             <th>Full Credit Amount</th>
@@ -22,8 +22,8 @@
             <th>LoanTermMonths</th>
         </tr>
         <tr th:object="${creditAdvertiseDTO}">
-            <td th:utext="${creditAdvertiseDTO.clientId}">...</td>
-            <td th:utext="${creditAdvertiseDTO.creditId}">...</td>
+            <td th:utext="${creditAdvertiseDTO.clientName}">...</td>
+            <td th:utext="${creditAdvertiseDTO.creditName}">...</td>
             <td th:utext="${creditAdvertiseDTO.creditAmount}">...</td>
             <td th:utext="${creditAdvertiseDTO.interestRate}">...</td>
             <td th:utext="${creditAdvertiseDTO.fullCreditAmount}">...</td>

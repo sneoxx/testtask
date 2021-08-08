@@ -71,6 +71,7 @@ public class CreditGraphResourceImpl implements CreditGraphResource {
         for (CreditGraphDTO creditGraphDTO : creditGraphDTOList) {
             creditGraphDTOSet.add(creditGraphDTO.getCreditAdvertise());
         }
+        log.debug("getCreditGraphDTOSet() - creditGraphDTOSet из успешно получен: {}", creditGraphDTOSet);
         return creditGraphDTOSet;
     }
 
@@ -93,6 +94,7 @@ public class CreditGraphResourceImpl implements CreditGraphResource {
                 creditGraphFoundDTOList.add(creditGraphFoundDTO);
             }
         }
+        log.debug("getCreditGraphFoundDTOList() - все CreditGraphDTO из БД успешно получены: {}", creditGraphDTOList);
         return creditGraphFoundDTOList;
     }
 }

@@ -9,12 +9,12 @@
 <th:block th:include="/_menu.html"></th:block>
 <h1>Delete Client</h1>
 
-Select ClientId:
+Select Client:
 <form th:action="@{/client/deleteClient}" th:object="${clientDTO}" method="POST">
     <select th:field="*{clientId}">
         <option th:each="client:${clients}"
                 th:value="${client.clientId}"
-                th:text="${client.clientId}">
+                th:text="${client.fullName}">
         </option>
     </select>
     <br/>

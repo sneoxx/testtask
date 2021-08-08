@@ -12,12 +12,12 @@
 <div>
     <table border="1">
         <tr>
-            <th>Credit Id</th>
+            <th>Credit Name</th>
             <th>Credit Limit</th>
             <th>Interest Rate</th>
         </tr>
         <tr th:each="credit : ${credits}">
-            <td th:utext="${credit.creditId}">...</td>
+            <td th:utext="${credit.creditName}">...</td>
             <td th:utext="${credit.creditLimit}">...</td>
             <td th:utext="${credit.interestRate}">...</td>
         </tr>
@@ -26,12 +26,12 @@
 <form name='f' th:object="${creditAdvertiseDTO}" method='POST'>
     <table>
         <tr>
-            <td>Select Credit Id:</td>
+            <td>Select Credit:</td>
             <td>
                 <select th:field="*{creditId}">
                     <option th:each="credit:${credits}"
                             th:value="${credit.creditId}"
-                            th:text="${credit.creditId}">
+                            th:text="${credit.creditName}">
                     </option>
                 </select>
 
@@ -52,7 +52,7 @@
         </tr>
     </table>
     Enter credit amount:
-    <input type="text" th:field="*{creditAmount}"/>
+    <input type="text" th:field="*{creditAmount}" />
     <div th:errors="*{creditAmount}" class="error" color="red"></div>
     <br/>
     Enter loan term months:

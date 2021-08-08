@@ -11,13 +11,13 @@
 <div>
     <table border="1">
         <tr>
-            <th>Credit Id</th>
+            <th>Credit Name</th>
             <th>Credit Limit</th>
             <th>Interest Rate</th>
 
         </tr>
         <tr th:each="credit : ${credits}">
-            <td th:utext="${credit.creditId}">...</td>
+            <td th:utext="${credit.creditName}">...</td>
             <td th:utext="${credit.creditLimit}">...</td>
             <td th:utext="${credit.interestRate}">...</td>
         </tr>

@@ -24,6 +24,8 @@ public class Credit {
     @Column(name = "credit_id")
     private UUID creditId;
 
+    private String creditName;
+
     private Integer creditLimit;
 
     private BigDecimal interestRate;

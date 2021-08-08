@@ -46,7 +46,6 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
 
     private final CreditLimitValidator creditLimitValidator;
 
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.setValidator(creditLimitValidator);
@@ -66,7 +65,7 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
     }
 
     /**
-     * Создать новое creditAdvertise, ввод начальных значенний
+     * Создать новое creditAdvertise, ввод начальных значений, http метод get
      *
      * @param model - объект Model для хранения данных
      * @return - страницу addCreditAdvertise
@@ -81,7 +80,7 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
     }
 
     /**
-     * Создать новое creditAdvertise, ввод начальных значенний
+     * Создать новое creditAdvertise, ввод начальных значенний, http метод post
      *
      * @param creditAdvertiseDTO - CreditAdvertiseDTO для заполения формы
      * @param bindingResult      - объект для валидации входных параметров
@@ -100,6 +99,9 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
             log.warn("create() - Превышение введенного Credit Amount над Credit Limit");
             throw new CreditLimitException("Exceeded Credit Limit");
         }
+
+        creditAdvertiseDTO.setCreditName(creditService.getCredit(creditAdvertiseDTO.getCreditId()).getCreditName());
+        creditAdvertiseDTO.setClientName(clientService.getClient(creditAdvertiseDTO.getClientId()).getFullName());
         creditAdvertiseDTO.setInterestRate(creditService.getCredit(creditAdvertiseDTO.getCreditId()).getInterestRate());
         BigDecimal interestAmount = (creditAdvertiseDTO.getInterestRate().multiply(new BigDecimal(creditAdvertiseDTO.getCreditAmount()))
                 .divide(new BigDecimal(100), 2)).divide(new BigDecimal(12), 2)
@@ -115,7 +117,7 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
     }
 
     /**
-     * Создать новое creditAdvertise, вывод графика клатежей и параметров кредита
+     * Создать новое creditAdvertise, вывод графика клатежей и параметров кредита, http метод get
      *
      * @return - страницу creditAdvertise
      */
@@ -126,7 +128,7 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
     }
 
     /**
-     * Создать новое creditAdvertise, вывод графика клатежей и параметров кредита
+     * Создать новое creditAdvertise, вывод графика клатежей и параметров кредита, http метод post
      *
      * @param creditAdvertiseDTO - CreditAdvertiseForm для заполения формы
      * @param bindingResult      - объект для валидации входных параметров
@@ -134,15 +136,7 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
      */
     @Override
     public String createCreditAdvertise(CreditAdvertiseDTO creditAdvertiseDTO, BindingResult bindingResult) {
-        CreditAdvertise creditAdvertise = new CreditAdvertise();
-        Credit credit = creditService.getCredit(creditAdvertiseDTO.getCreditId());
-        creditAdvertise.setCredit(credit);
-        creditAdvertise.setCreditAmount(new BigDecimal(creditAdvertiseDTO.getCreditAmount()));
-        List<Client> clientList = new ArrayList<>();
-        clientList.add(clientService.getClient(creditAdvertiseDTO.getClientId()));
-        creditAdvertise.setClientList(clientList);
-        creditAdvertise.setLoanTermMonths(creditAdvertiseDTO.getLoanTermMonths());
-        creditAdvertise.setCreditGraphs(creditAdvertiseDTO.getCreditGraphs());
+        CreditAdvertise creditAdvertise = conversionService.convert(creditAdvertiseDTO, CreditAdvertise.class);
         CreditAdvertise creditAdvertiseResult = creditAdvertiseService.create(creditAdvertise);
         CreditAdvertiseDTO CreditAdvertiseDTOCheck = conversionService.convert(creditAdvertiseResult, CreditAdvertiseDTO.class);
         log.info("createCreditAdvertise() - Создан новый CreditAdvertise {}", CreditAdvertiseDTOCheck);
@@ -150,7 +144,7 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
     }
 
     /**
-     * Удаление creditAdvertise
+     * Удаление creditAdvertise, http метод get
      *
      * @param model - объект Model для хранения данных
      * @return - страница deleteCreditAdvertise для первоначального отображения
@@ -164,7 +158,7 @@ public class CreditAdvertiseResourceImpl implements CreditAdvertiseResource {
     }
 
     /**
-     * Удаление creditAdvertise
+     * Удаление creditAdvertise, http метод post
      *
      * @param creditAdvertiseDTO - CreditAdvertiseDTO для заполения формы
      * @return - редирект на страницу со всеми CreditAdvertise

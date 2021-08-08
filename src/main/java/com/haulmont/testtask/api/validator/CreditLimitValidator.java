@@ -34,18 +34,22 @@ public class CreditLimitValidator implements Validator {
             errors.reject("creditAmount", "Cannot be null");
         }
 
-        if (creditAdvertiseForm.getCreditAmount() != null && (creditService.getCredit(creditAdvertiseForm.getCreditId()).getCreditLimit().compareTo(creditAdvertiseForm.getCreditAmount())) < 0) {
+        if (creditAdvertiseForm.getCreditAmount() != null && creditAdvertiseForm.getCreditAmount() < 1) {
+            errors.rejectValue("creditAmount", "Cannot be 0 or negative", "Cannot be 0 or negative");
+            errors.reject("creditAmount", "Cannot be 0 or negative");
+        }
 
+        if (creditAdvertiseForm.getCreditAmount() != null && (creditService.getCredit(creditAdvertiseForm.getCreditId()).getCreditLimit().compareTo(creditAdvertiseForm.getCreditAmount())) < 0) {
             errors.rejectValue("creditAmount", "Exceeded Credit Limit", "Exceeded Credit Limit");
             errors.reject("creditAmount", "Exceeded Credit Limit");
         }
 
-        if (creditAdvertiseForm.getCreditAmount() != null && creditAdvertiseForm.getLoanTermMonths() < 1) {
+        if (creditAdvertiseForm.getCreditAmount() != null && creditAdvertiseForm.getLoanTermMonths() != null && creditAdvertiseForm.getLoanTermMonths() < 1) {
             errors.rejectValue("loanTermMonths", "Cannot be 0 or negative", "Cannot be 0 or negative");
             errors.reject("loanTermMonths", "Cannot be 0 or negative");
         }
 
-        if (creditAdvertiseForm.getCreditAmount() != null && creditAdvertiseForm.getLoanTermMonths() > 100) {
+        if (creditAdvertiseForm.getCreditAmount() != null && creditAdvertiseForm.getLoanTermMonths() != null && creditAdvertiseForm.getLoanTermMonths() > 100) {
             errors.rejectValue("loanTermMonths", "Cannot be more than 100", "Cannot be more than 100");
             errors.reject("loanTermMonths", "Cannot be more than 100");
         }

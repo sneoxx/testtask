@@ -11,21 +11,13 @@
 
 <form th:action="@{/credit/updateCredit}"
       th:object="${creditDTO}" method="POST">
-    Select ClientId:
+    Select CreditId:
     <select th:field="*{creditId}">
         <option th:each="credit:${credits}"
                 th:value="${credit.creditId}"
                 th:text="${credit.creditId}">
         </option>
     </select>
-    <br/>
-    CreditLimit:
-    <td><input type="text" th:field="*{creditLimit}"/></td>
-    <div th:errors="*{creditLimit}" class="error"></div>
-    <br/>
-    InterestRate:
-    <input type="text" th:field="*{interestRate}"/>
-    <div th:errors="*{interestRate}" class="error"></div>
     <br/>
     <input type="submit" value="Update"/>
 </form>

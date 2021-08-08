@@ -11,14 +11,12 @@
 <div>
     <table border="1">
         <tr>
-            <th>Client Id</th>
             <th>Full Name</th>
             <th>Phone</th>
             <th>Email</th>
             <th>Passport Number</th>
         </tr>
         <tr th:each="client : ${clients}">
-            <td th:utext="${client.clientId}">...</td>
             <td th:utext="${client.fullName}">...</td>
             <td th:utext="${client.phone}">...</td>
             <td th:utext="${client.email}">...</td>

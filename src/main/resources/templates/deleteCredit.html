@@ -9,12 +9,12 @@
 <th:block th:include="/_menu.html"></th:block>
 <h1>Delete Credit</h1>
 
-Select Credit Id:
+Select Credit:
 <form th:action="@{/credit/deleteCredit}" th:object="${creditDTO}" method="POST">
     <select th:field="*{creditId}">
         <option th:each="credit:${credits}"
                 th:value="${credit.creditId}"
-                th:text="${credit.creditId}">
+                th:text="${credit.creditName}">
         </option>
     </select>
     <br/>

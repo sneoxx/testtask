@@ -10,7 +10,10 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,18 +37,14 @@ public class ClientResourceImpl implements ClientResource {
      */
     @Override
     public String getAll(Model model) {
-        List<Client> clientList = clientService.getAllClient();
-        List<ClientDTO> clientDTOList = new ArrayList<>();
-        for (Client client : clientList) {
-            clientDTOList.add(conversionService.convert(client, ClientDTO.class));
-        }
+        List<ClientDTO> clientDTOList = getAllClientDTO();
         model.addAttribute("clients", clientDTOList);
         log.info("getAll() - Получены все client");
         return "clientList";
     }
 
     /**
-     * Добавление нового Client
+     * Добавление нового Client, http метод get
      *
      * @param model - объект Model для хранения данных
      * @return - страницу addClient
@@ -58,7 +57,7 @@ public class ClientResourceImpl implements ClientResource {
     }
 
     /**
-     * Добавление нового Client
+     * Добавление нового Client, http метод post
      *
      * @param clientDTO     - clientDTO для заполения формы
      * @param bindingResult - объект для валидации входных параметров
@@ -77,7 +76,7 @@ public class ClientResourceImpl implements ClientResource {
     }
 
     /**
-     * Обновление Client
+     * Обновление Client, http метод get
      *
      * @param model - объект Model для хранения данных
      * @return - страницу updateClient
@@ -85,44 +84,62 @@ public class ClientResourceImpl implements ClientResource {
     @Override
     public String update(Model model) {
         model.addAttribute("clientDTO", new ClientDTO());
-        List<Client> clientList = clientService.getAllClient();
-        List<ClientDTO> clientDTOList = new ArrayList<>();
-        for (Client client : clientList) {
-            clientDTOList.add(conversionService.convert(client, ClientDTO.class));
-        }
+        List<ClientDTO> clientDTOList = getAllClientDTO();
         model.addAttribute("clients", clientDTOList);
         log.debug("update() - Форма обновления client");
         return "updateClient";
     }
 
     /**
-     * Обновление Client
+     * Обновление выбранного Client, http метод post
+     *
+     * @param clientDTO - clientDTO для заполнения формы
+     * @return - редирект на страницу updateSelectedClient
+     */
+    @Override
+    public String update(ClientDTO clientDTO, RedirectAttributes redirectAttributes) {
+        Client client = clientService.getClient(clientDTO.getClientId());
+        ClientDTO clientDTOResult = conversionService.convert(client, ClientDTO.class);
+        redirectAttributes.addFlashAttribute("clientDTO", clientDTOResult);
+        log.info("update() - Выбран clientDTO для обновления");
+        return "redirect:updateSelectedClient";
+    }
+
+    /**
+     * Форма обновления выбранного клиента, http метод get
+     *
+     * @return - страницу updateSelectedClient
+     */
+    @Override
+    public String updateSelectedClient() {
+        log.debug("updateSelectedClient() - Форма обновления выбранного клиента");
+        return "updateSelectedClient";
+    }
+
+    /**
+     *
+     * Обновление выбранного Client, http метод post
      *
      * @param clientDTO     - clientDTO для заполения формы
      * @param bindingResult - объект для валидации входных параметров
      * @param model         - объект Model для хранения данных
-     * @return - - вернет страницу updateClient в случае неверных параметров и редирект на страницу clientList в случае успеха
+     * @return     - вернет страницу updateSelectedClient в случае неверных параметров и редирект на страницу allClient в случае успеха
      */
     @Override
-    public String update(ClientDTO clientDTO, BindingResult bindingResult, Model model) {
+    public String updateSelectedClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            List<Client> clientList = clientService.getAllClient();
-            List<ClientDTO> clientDTOList = new ArrayList<>();
-            for (Client client : clientList) {
-                clientDTOList.add(conversionService.convert(client, ClientDTO.class));
-            }
-            model.addAttribute("clients", clientDTOList);
-            return "updateClient";
+            log.info("updateSelectedClient() - Введены неверные значения Client: {}", clientDTO);
+            return "updateSelectedClient";
         }
         Client clientConvert = conversionService.convert(clientDTO, Client.class);
         Client clientResult = clientService.create(clientConvert);
         ClientDTO clientDTOCheck = conversionService.convert(clientResult, ClientDTO.class);
-        log.info("update() - Обновлен Client: {}", clientDTOCheck);
+        log.info("updateSelectedClient() - Обновлен Client: {}", clientDTOCheck);
         return "redirect:allClient";
     }
 
     /**
-     * Удаление Client
+     * Удаление Client, http метод get
      *
      * @param model - объект Model для хранения данных
      * @return страница deleteClient для первоначального отображения
@@ -130,18 +147,14 @@ public class ClientResourceImpl implements ClientResource {
     @Override
     public String delete(Model model) {
         model.addAttribute("clientDTO", new ClientDTO());
-        List<Client> clientList = clientService.getAllClient();
-        List<ClientDTO> clientDTOList = new ArrayList<>();
-        for (Client client : clientList) {
-            clientDTOList.add(conversionService.convert(client, ClientDTO.class));
-        }
+        List<ClientDTO> clientDTOList = getAllClientDTO();
         model.addAttribute("clients", clientDTOList);
         log.debug("delete() - Форма удаления client");
         return "deleteClient";
     }
 
     /**
-     * Удаление Client
+     * Удаление Client, http метод post
      *
      * @param clientDTO - clientDTO для заполения формы
      * @return - редирект на страницу со всеми client
@@ -154,4 +167,17 @@ public class ClientResourceImpl implements ClientResource {
         return "redirect:allClient";
     }
 
+    /**
+     * Получение всех Client из БД и конвертация их в ClientDTO
+     * @return - List всех ClientDTO из БД
+     */
+    public List<ClientDTO> getAllClientDTO() {
+        List<Client> clientList = clientService.getAllClient();
+        List<ClientDTO> clientDTOList = new ArrayList<>();
+        for (Client client : clientList) {
+            clientDTOList.add(conversionService.convert(client, ClientDTO.class));
+        }
+        log.debug("getAllClientDTO() - все Client из БД успешно получены и сконвертированы в ClientDTO: {}", clientDTOList);
+        return clientDTOList;
+    }
 }

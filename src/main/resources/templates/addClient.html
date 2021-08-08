@@ -10,20 +10,20 @@
 <h1>Add Client</h1>
 <form th:action="@{/client/addClient}"
       th:object="${clientDTO}" method="POST">
-    FullName:
-    <input type="text" th:field="*{fullName}"/>
+    Full Name:
+    <input type="text" th:name="login" th:field="*{fullName}" placeholder="enter full name"/>
     <div th:errors="*{fullName}" class="error"></div>
     <br/>
     Phone:
-    <input type="text" th:field="*{phone}"/>
+    <input type="text" th:field="*{phone}" placeholder="enter phone"/>
     <div th:errors="*{phone}" class="error"></div>
     <br/>
     Email:
-    <input type="text" th:field="*{email}"/>
+    <input type="text" th:field="*{email}" placeholder="enter email"/>
     <div th:errors="*{email}" class="error"></div>
     <br/>
-    PassportNumber:
-    <input type="text" th:field="*{passportNumber}"/>
+    Passport Number:
+    <input type="text" th:field="*{passportNumber}" placeholder="enter passport number"/>
     <div th:errors="*{passportNumber}" class="error"></div>
     <br/>
     <input type="submit" value="Create"/>

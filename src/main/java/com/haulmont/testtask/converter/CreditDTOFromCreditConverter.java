@@ -15,6 +15,7 @@ public class CreditDTOFromCreditConverter implements Converter<Credit, CreditDTO
     public CreditDTO convert(Credit credit) {
         CreditDTO creditDTO = new CreditDTO();
         creditDTO.setCreditId(credit.getCreditId());
+        creditDTO.setCreditName(credit.getCreditName());
         creditDTO.setCreditLimit(credit.getCreditLimit().toString());
         creditDTO.setInterestRate(credit.getInterestRate().toString());
         creditDTO.setCreditAdvertise(credit.getCreditAdvertise());

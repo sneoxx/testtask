@@ -3,9 +3,8 @@ package com.haulmont.testtask.api.resource;
 import com.haulmont.testtask.api.dto.ClientDTO;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -28,7 +27,13 @@ public interface ClientResource {
     String update(Model model);
 
     @PostMapping("/updateClient")
-    String update(@Valid ClientDTO clientDTO, BindingResult bindingResult, Model model);
+    String update(ClientDTO clientDTO, RedirectAttributes redirectAttributes);
+
+    @GetMapping("/updateSelectedClient")
+    String updateSelectedClient();
+
+    @PostMapping("/updateSelectedClient")
+    String updateSelectedClient(@Valid @ModelAttribute("clientDTO") ClientDTO clientDTO, BindingResult bindingResult, Model model);
 
     @GetMapping("/deleteClient")
     String delete(Model model);

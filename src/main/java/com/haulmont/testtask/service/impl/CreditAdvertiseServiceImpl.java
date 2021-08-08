@@ -66,6 +66,13 @@ public class CreditAdvertiseServiceImpl implements CreditAdvertiseService {
         return creditAdvertise;
     }
 
+
+    /**
+     * Получить график платежей кредитного предложения
+     *
+     * @param creditAdvertise - экземпляр creditAdvertise
+     * @return - creditGraphList
+     */
     public List<CreditGraph> getCreditGraphList(CreditAdvertise creditAdvertise) {
         BigDecimal interestAmount = (creditAdvertise.getCredit().getInterestRate().multiply(creditAdvertise.getCreditAmount())
                 .divide(new BigDecimal(100), 2)).divide(new BigDecimal(12), 2)

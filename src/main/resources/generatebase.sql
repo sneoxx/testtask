@@ -8,9 +8,9 @@ CREATE TABLE client (
 );
 
 INSERT INTO client(client_id, full_name, phone, email, passport_number) VALUES
-(uuid(),'Ivan Ivanov','79635847969','rtt@mail.ru','2596369745'),
-(uuid(),'Petr Petrov','79667847562','uoghi@mail.ru','3195423698'),
-(uuid(),'Elena Leva','79565848629','uih0@mail.ru','7954276923');
+(uuid(),'Ivan Ivanov','79635847969','ritt@yandex.ru','2596369745'),
+(uuid(),'Petr Petrov','79667847562','uoghi@gmail.ru','3195423698'),
+(uuid(),'Elena Leva','79565848629','uih0p@mail.ru','7954276923');
 
 CREATE TABLE bank (
    client_id uuid NOT NULL,
@@ -19,15 +19,16 @@ CREATE TABLE bank (
 
 CREATE TABLE credit (
    credit_id uuid NOT NULL,
+   credit_name varchar(50) NOT NULL,
    credit_limit varchar(12) NOT NULL,
    interest_rate decimal(4,2) NOT NULL,
    CONSTRAINT credit_pkey PRIMARY KEY (credit_id)
 );
 
-INSERT INTO credit(credit_id, credit_limit, interest_rate) VALUES
-(uuid(),'1000000','20'),
-(uuid(),'3000000','18'),
-(uuid(),'5000000','12.2');
+INSERT INTO credit(credit_id, credit_name, credit_limit, interest_rate) VALUES
+(uuid(),'Mortgage','10000000','15'),
+(uuid(),'For all','3000000','18'),
+(uuid(),'Low percentage','500000','12.2');
 
 CREATE TABLE credit_advertise (
 credit_advertise_id uuid NOT NULL,

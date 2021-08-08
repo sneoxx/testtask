@@ -17,6 +17,8 @@ public class CreditAdvertiseDTO {
 
     private UUID creditId;
 
+    private String creditName;
+
     private Integer creditAmount;
 
     private BigDecimal interestRate;
@@ -28,6 +30,8 @@ public class CreditAdvertiseDTO {
     private Integer loanTermMonths;
 
     private UUID clientId;
+
+    private String clientName;
 
     private List<CreditGraph> creditGraphs;
 
